@@ -1,0 +1,14 @@
+{
+  "name": "MyMaster",
+  "short_name": "MyMaster",
+  "description": "Checklist dan deadline Master IT (CDCS751). Developed by FaridAssamani",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4f6f5",
+  "theme_color": "#0F6E56",
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
+  ]
+}
