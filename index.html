@@ -93,7 +93,7 @@ footer{text-align:center;font-size:11px;color:var(--tx2);margin:24px 0 0;line-he
     <input type="file" id="fImp" accept="application/json" style="display:none">
   </div>
   <footer>
-    <div>MyMaster · v1.0 · 24 Nov 2026 · © 2026</div>
+    <div>MyMaster · v1.1 · 24 Nov 2026 · © 2026</div>
     <div>Developed by FaridAssamani</div>
   </footer>
 </div>
@@ -117,14 +117,14 @@ footer{text-align:center;font-size:11px;color:var(--tx2);margin:24px 0 0;line-he
 <div id="toast"></div>
 
 <script>
-const VER='1.0',KEY='mymaster.v1',SKEY='mymaster.set';
+const VER='1.1',KEY='mymaster.v1',SKEY='mymaster.set';
 const L={
 ms:{theme:{system:'Auto',light:'Cerah',dark:'Gelap'},install:'Pasang',all:'Semua',todo:'Belum siap',done:'Siap',next:'Deadline seterusnya',late:'Lewat',days:'hari lagi',today:'Hari ini',tmr:'Esok',lateN:'Lewat {n} hari',check:'Sahkan tarikh',none:'Tiada tugasan.',allDone:'Semua siap!',prog:'{a} / {b} siap',add:'Tambah tugasan',edit:'Edit tugasan',ft:'Tajuk',fp:'Fasa',fd:'Deadline',fc:'Tarikh belum pasti (sahkan)',fn:'Nota',save:'Simpan',cal:'Kalendar',del:'Padam',can:'Batal',exp:'Backup (JSON)',imp:'Pulihkan',rst:'Reset data',delq:'Padam tugasan ini?',rstq:'Reset kepada senarai asal? Semua perubahan hilang.',saved:'Disimpan',need:'Isi tajuk dan deadline',impok:'Data dipulihkan',imperr:'Fail tak sah',iosh:'Di iPhone: tekan Kongsi › Tambah ke Skrin Utama',load:'Memuatkan…',noDate:'Tiada tarikh'},
 en:{theme:{system:'Auto',light:'Light',dark:'Dark'},install:'Install',all:'All',todo:'Pending',done:'Done',next:'Next deadline',late:'Overdue',days:'days left',today:'Today',tmr:'Tomorrow',lateN:'{n} days overdue',check:'Confirm date',none:'No tasks.',allDone:'All done!',prog:'{a} / {b} done',add:'Add task',edit:'Edit task',ft:'Title',fp:'Phase',fd:'Deadline',fc:'Date not confirmed yet',fn:'Notes',save:'Save',cal:'Calendar',del:'Delete',can:'Cancel',exp:'Backup (JSON)',imp:'Restore',rst:'Reset data',delq:'Delete this task?',rstq:'Reset to the original list? All changes will be lost.',saved:'Saved',need:'Fill in title and deadline',impok:'Data restored',imperr:'Invalid file',iosh:'On iPhone: tap Share › Add to Home Screen',load:'Loading…',noDate:'No date'}
 };
 const SEED=[
-['1. Persediaan','Sahkan portal permohonan CDCS751 (30 Nov berkaitan atau tidak?)','2026-11-24',0,'Laman Program Profesional nampak bukan untuk sarjana penyelidikan'],
 ['1. Persediaan','Bagi jumlah pelajar sebenar (untuk concept note)','2026-11-25',0,''],
+['1. Persediaan','Tanya IPSis: intake Mac vs sepanjang tahun, tarikh tutup Mac 2027','2026-11-30',0,'Brosur: jadual tulis Mac & Oktober, tapi mod penyelidikan dibuka sepanjang tahun'],
 ['1. Persediaan','Approach Dr Imran dan Dr Suraya','2026-11-28',0,'Dr K (Tapah) sebagai padanan topik, mungkin online atau co-SV'],
 ['1. Persediaan','Siapkan concept note 1–2 muka surat','2026-12-05',1,''],
 ['1. Persediaan','Tanya CGS Perak: daftar CDCS751 di Seri Iskandar & penyelia kampus lain','2026-12-15',1,''],
@@ -132,8 +132,10 @@ const SEED=[
 ['1. Persediaan','Kebenaran bertulis bos: data, survei, penerbitan','2026-12-31',1,''],
 ['2. Permohonan','Minta data pra-pemasangan WiFi semua kampus','2027-01-31',1,'Log rangkaian, aduan ICT, heatmap liputan'],
 ['2. Permohonan','Mula literature review dan Bab 1 awal','2027-01-31',1,''],
-['2. Permohonan','Mohon di study.uitm.edu.my','2027-02-28',1,'Sahkan tarikh buka/tutup bagi Mac 2027'],
-['2. Permohonan','Hantar dokumen dan concept note','2027-02-28',1,''],
+['2. Permohonan','Mohon di study.uitm.edu.my','2027-02-28',1,'Portal: online.uitm.edu.my/ipsis/research. Syarat: Bumiputera, ijazah Honours. Sahkan tarikh tutup Mac 2027'],
+['2. Permohonan','Beli BSN PIN UiTM (slip BSN diperlukan untuk borang)','2027-01-31',1,''],
+['2. Permohonan','Dapatkan laporan rujukan (referee) dan salinan sijil disahkan','2027-02-15',1,'IC, sijil ijazah, transkrip: salinan disahkan'],
+['2. Permohonan','Hantar dokumen dan cadangan penyelidikan (research proposal)','2027-02-28',1,'Portal minta research proposal untuk program penyelidikan; hantar ke fakulti'],
 ['3. Pendaftaran (Mac 2027)','Sahkan tawaran dan daftar','2027-03-15',1,''],
 ['3. Pendaftaran (Mac 2027)','Daftar IPSis Research Skills Seminar (8 modul, Zoom)','2027-03-31',1,''],
 ['3. Pendaftaran (Mac 2027)','Sahkan SV dan co-SV secara rasmi','2027-03-31',1,''],
