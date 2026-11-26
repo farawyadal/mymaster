@@ -57,8 +57,8 @@ button,select,input,textarea{font:inherit;color:inherit}
 .fab{position:fixed;right:18px;bottom:60px;width:54px;height:54px;border-radius:50%;background:var(--pri);color:#fff;border:none;font-size:30px;box-shadow:0 3px 10px rgba(0,0,0,.3);cursor:pointer}
 footer{text-align:center;font-size:11px;color:var(--tx2);margin:24px 0 0;line-height:1.6}
 .empty{text-align:center;color:var(--tx2);padding:30px 0}
-#modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:flex-end;justify-content:center;z-index:20}
-#modal.on{display:flex}
+#modal,#pmodal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:flex-end;justify-content:center;z-index:20}
+#modal.on,#pmodal.on{display:flex}
 .sheet{background:var(--card);width:100%;max-width:640px;border-radius:18px 18px 0 0;padding:16px;max-height:92vh;overflow:auto}
 .sheet label{display:block;font-size:12px;color:var(--tx2);margin:10px 0 3px}
 .sheet input[type=text],.sheet input[type=date],.sheet textarea{width:100%;padding:9px;border:1px solid var(--bd);border-radius:10px;background:var(--bg)}
@@ -69,6 +69,33 @@ footer{text-align:center;font-size:11px;color:var(--tx2);margin:24px 0 0;line-he
 #loader.off{display:none}
 .donut{width:46px;height:46px;border-radius:50%;border:6px solid var(--pri2);border-top-color:var(--pri);animation:sp 0.9s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
+
+.tabs{display:flex;gap:6px;margin:0 0 12px}
+.tabs button{flex:1;padding:8px;border:1px solid var(--bd);background:var(--card);border-radius:10px;font-size:14px;cursor:pointer}
+.tabs button.on{background:var(--pri);border-color:var(--pri);color:#fff}
+.sum{display:flex;gap:6px;margin:0 0 10px}
+.sum div{flex:1;background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:6px 8px;font-size:11px;color:var(--tx2)}
+.sum b{display:block;font-size:18px;font-weight:600;color:var(--tx)}
+.fub{background:color-mix(in srgb,var(--bad) 22%,transparent);border:1px solid var(--bad);border-radius:10px;padding:8px 10px;font-size:13px;margin:0 0 10px}
+.pc{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:10px;margin-bottom:8px;box-shadow:var(--sh)}
+.pc.fu{border-color:var(--bad);border-width:2px}
+.pc .top{display:flex;justify-content:space-between;align-items:center}
+.pc .cat{font-size:10px;color:var(--tx2);text-transform:uppercase;letter-spacing:.04em}
+.pc .ed{background:none;border:none;font-size:18px;padding:0 4px;cursor:pointer;color:var(--tx2)}
+.pc .t{margin:2px 0;word-wrap:break-word}
+.pc .src{font-size:12px;color:var(--tx2)}
+.pc .n{font-size:12px;color:var(--tx2);margin-top:2px;word-wrap:break-word}
+.pc .r2{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:8px 0 6px}
+.pc select{font-size:12px;padding:3px 6px;border-radius:8px;border:1px solid var(--bd);color:var(--tx)}
+.s0{background:color-mix(in srgb,#888780 25%,transparent)}
+.s1{background:color-mix(in srgb,#378ADD 28%,transparent)}
+.s2{background:color-mix(in srgb,#EF9F27 38%,transparent)}
+.s3{background:color-mix(in srgb,#1D9E75 30%,transparent)}
+.pc .r3{display:flex;gap:6px;align-items:center}
+.pc .r3 input{flex:1;min-width:0;font-size:13px;padding:6px 8px;border:1px solid var(--bd);border-radius:8px;background:var(--bg)}
+.pc .r3 a{font-size:12px;padding:6px 9px;border:1px solid var(--bd);border-radius:8px;text-decoration:none;color:var(--tx);white-space:nowrap}
+.pc .r3 a.hid{display:none}
+.sheet select,.sheet input[type=tel]{width:100%;padding:9px;border:1px solid var(--bd);border-radius:10px;background:var(--bg)}
 #toast{position:fixed;left:50%;bottom:120px;transform:translateX(-50%);background:#222;color:#fff;padding:8px 14px;border-radius:20px;font-size:13px;display:none;z-index:30}
 </style>
 </head>
@@ -83,9 +110,13 @@ footer{text-align:center;font-size:11px;color:var(--tx2);margin:24px 0 0;line-he
       <button class="btn pri" id="bInstall" style="display:none"></button>
     </div>
   </header>
+  <div class="tabs" id="tabs"></div>
+  <div id="vCheck">
   <div id="next"></div>
   <div class="filters" id="filters"></div>
   <div id="list"></div>
+  </div>
+  <div id="vPrep"></div>
   <div class="tools" style="justify-content:center;margin-top:18px">
     <button class="btn" id="bExp"></button>
     <button class="btn" id="bImp"></button>
@@ -93,7 +124,7 @@ footer{text-align:center;font-size:11px;color:var(--tx2);margin:24px 0 0;line-he
     <input type="file" id="fImp" accept="application/json" style="display:none">
   </div>
   <footer>
-    <div>MyMaster · v1.3 · 24 Nov 2026 · © 2026</div>
+    <div>MyMaster · v1.4 · 26 Nov 2026 · © 2026</div>
     <div>Developed by FaridAssamani</div>
   </footer>
 </div>
@@ -114,13 +145,30 @@ footer{text-align:center;font-size:11px;color:var(--tx2);margin:24px 0 0;line-he
     <button class="btn" id="bCan"></button>
   </div>
 </div></div>
+<div id="pmodal"><div class="sheet">
+  <b id="pmTitle" style="font-size:16px"></b>
+  <label id="plT"></label><input type="text" id="pT">
+  <label id="plC"></label><input type="text" id="pC" list="pcl">
+  <datalist id="pcl"></datalist>
+  <label id="plS"></label><input type="text" id="pS">
+  <label id="plSt"></label><select id="pSt"></select>
+  <label id="plNm"></label><input type="text" id="pNm">
+  <label id="plPh"></label><input type="tel" id="pPh">
+  <label id="plAk"></label><input type="date" id="pAk">
+  <label id="plNo"></label><textarea id="pNo" rows="3"></textarea>
+  <div class="btns">
+    <button class="btn pri" id="pSave"></button>
+    <button class="btn del" id="pDel"></button>
+    <button class="btn" id="pCan"></button>
+  </div>
+</div></div>
 <div id="toast"></div>
 
 <script>
-const VER='1.3',KEY='mymaster.v1',SKEY='mymaster.set';
+const VER='1.4',KEY='mymaster.v1',PKEY='mymaster.prep.v1',SKEY='mymaster.set';
 const L={
-ms:{theme:{system:'Auto',light:'Cerah',dark:'Gelap'},install:'Pasang',all:'Semua',todo:'Belum siap',done:'Siap',next:'Deadline seterusnya',late:'Lewat',days:'hari lagi',today:'Hari ini',tmr:'Esok',lateN:'Lewat {n} hari',check:'Sahkan tarikh',none:'Tiada tugasan.',allDone:'Semua siap!',prog:'{a} / {b} siap',add:'Tambah tugasan',edit:'Edit tugasan',ft:'Tajuk',fp:'Fasa',fd:'Deadline',fc:'Tarikh belum pasti (sahkan)',fn:'Nota',save:'Simpan',cal:'Kalendar',del:'Padam',can:'Batal',exp:'Backup (JSON)',imp:'Pulihkan',rst:'Reset data',delq:'Padam tugasan ini?',rstq:'Reset kepada senarai asal? Semua perubahan hilang.',saved:'Disimpan',need:'Isi tajuk dan deadline',impok:'Data dipulihkan',imperr:'Fail tak sah',iosh:'Di iPhone: tekan Kongsi › Tambah ke Skrin Utama',load:'Memuatkan…',noDate:'Tiada tarikh'},
-en:{theme:{system:'Auto',light:'Light',dark:'Dark'},install:'Install',all:'All',todo:'Pending',done:'Done',next:'Next deadline',late:'Overdue',days:'days left',today:'Today',tmr:'Tomorrow',lateN:'{n} days overdue',check:'Confirm date',none:'No tasks.',allDone:'All done!',prog:'{a} / {b} done',add:'Add task',edit:'Edit task',ft:'Title',fp:'Phase',fd:'Deadline',fc:'Date not confirmed yet',fn:'Notes',save:'Save',cal:'Calendar',del:'Delete',can:'Cancel',exp:'Backup (JSON)',imp:'Restore',rst:'Reset data',delq:'Delete this task?',rstq:'Reset to the original list? All changes will be lost.',saved:'Saved',need:'Fill in title and deadline',impok:'Data restored',imperr:'Invalid file',iosh:'On iPhone: tap Share › Add to Home Screen',load:'Loading…',noDate:'No date'}
+ms:{tabC:'Checklist',tabP:'Sediakan',pst:['Belum mula','Dalam proses','Menunggu jawapan','Siap'],fuB:'{n} perkara perlu follow-up (lebih 7 hari tiada respon)',fuN:'Follow-up: {n} hari tiada respon',pdays:'hari',pAll:'Semua',pFrom:'Dapatkan dari',pName:'Nama',pPhone:'No. telefon',pAsked:'Dimintai',wa:'WhatsApp',call:'Panggil',pAdd:'Tambah perkara',pEdit:'Edit perkara',pT:'Perkara',pC:'Kategori',pS:'Dapatkan dari',pSt:'Status',pNm:'Nama kontak',pPh:'No. telefon',pAk:'Tarikh minta',pNo:'Nota',pNeed:'Isi perkara',pDelq:'Padam perkara ini?',pRstq:'Reset senarai Sediakan kepada asal? Semua perubahan hilang.',pNone:'Tiada perkara.',theme:{system:'Auto',light:'Cerah',dark:'Gelap'},install:'Pasang',all:'Semua',todo:'Belum siap',done:'Siap',next:'Deadline seterusnya',late:'Lewat',days:'hari lagi',today:'Hari ini',tmr:'Esok',lateN:'Lewat {n} hari',check:'Sahkan tarikh',none:'Tiada tugasan.',allDone:'Semua siap!',prog:'{a} / {b} siap',add:'Tambah tugasan',edit:'Edit tugasan',ft:'Tajuk',fp:'Fasa',fd:'Deadline',fc:'Tarikh belum pasti (sahkan)',fn:'Nota',save:'Simpan',cal:'Kalendar',del:'Padam',can:'Batal',exp:'Backup (JSON)',imp:'Pulihkan',rst:'Reset data',delq:'Padam tugasan ini?',rstq:'Reset kepada senarai asal? Semua perubahan hilang.',saved:'Disimpan',need:'Isi tajuk dan deadline',impok:'Data dipulihkan',imperr:'Fail tak sah',iosh:'Di iPhone: tekan Kongsi › Tambah ke Skrin Utama',load:'Memuatkan…',noDate:'Tiada tarikh'},
+en:{tabC:'Checklist',tabP:'Prepare',pst:['Not started','In progress','Waiting for reply','Done'],fuB:'{n} item(s) need a follow-up (over 7 days with no reply)',fuN:'Follow-up: {n} days no reply',pdays:'days',pAll:'All',pFrom:'Get it from',pName:'Name',pPhone:'Phone no.',pAsked:'Asked',wa:'WhatsApp',call:'Call',pAdd:'Add item',pEdit:'Edit item',pT:'Item',pC:'Category',pS:'Get it from',pSt:'Status',pNm:'Contact name',pPh:'Phone no.',pAk:'Date asked',pNo:'Notes',pNeed:'Fill in the item',pDelq:'Delete this item?',pRstq:'Reset the Prepare list to the original? All changes will be lost.',pNone:'No items.',theme:{system:'Auto',light:'Light',dark:'Dark'},install:'Install',all:'All',todo:'Pending',done:'Done',next:'Next deadline',late:'Overdue',days:'days left',today:'Today',tmr:'Tomorrow',lateN:'{n} days overdue',check:'Confirm date',none:'No tasks.',allDone:'All done!',prog:'{a} / {b} done',add:'Add task',edit:'Edit task',ft:'Title',fp:'Phase',fd:'Deadline',fc:'Date not confirmed yet',fn:'Notes',save:'Save',cal:'Calendar',del:'Delete',can:'Cancel',exp:'Backup (JSON)',imp:'Restore',rst:'Reset data',delq:'Delete this task?',rstq:'Reset to the original list? All changes will be lost.',saved:'Saved',need:'Fill in title and deadline',impok:'Data restored',imperr:'Invalid file',iosh:'On iPhone: tap Share › Add to Home Screen',load:'Loading…',noDate:'No date'}
 };
 const SEED=[
 ['1. Persediaan (Dis 2026–Feb 2027)','Bagi jumlah pelajar sebenar (untuk concept note)','2026-11-25',0,''],
@@ -158,8 +206,9 @@ const SEED=[
 ['7. Penamat (Jul 2028–Feb 2029)','Sasaran hantar tesis (Q4 2028)','2028-11-30',1,'Sahkan tarikh dalam kalendar IPSis'],
 ['7. Penamat (Jul 2028–Feb 2029)','Viva dan pembetulan','2029-02-28',1,'Sebelum atau sekitar pindah ke Seri Iskandar 2029']
 ];
+const PSEED=[["Data baseline", "Laporan site survey dan ujian penerimaan (acceptance test) vendor bagi setiap kampus", "Pengurus projek WiFi / vendor", 0, "Untuk baseline liputan dan kekuatan isyarat"], ["Data baseline", "Data lama dari controller/NMS: bilangan klien, kegagalan sambungan, penggunaan kanal", "Pasukan rangkaian kampus / Infrastruktur Digital", 0, "Log biasanya disimpan 30-90 hari. Tanya sama ada pernah di-export"], ["Data baseline", "Statistik penggunaan WiFi sebelum deployment: bilangan pengguna dan trafik agregat", "Pasukan rangkaian kampus", 0, ""], ["Data baseline", "Rekod aduan ICT berkaitan WiFi mengikut kampus dan tahun", "Unit Teknologi Pengkomputeran / sistem tiket helpdesk", 0, "Kira aduan WiFi per 1,000 pengguna"], ["Reka bentuk kajian", "Status siap setiap kampus: sudah, belum, atau tarikh dijangka siap", "Pengurus projek WiFi", 0, "Kampus belum siap (contoh Bertam) jadi kampus kawalan"], ["Data baseline", "Pelan lantai dan bilangan AP bagi setiap bangunan", "Pengurus projek WiFi / vendor", 0, ""], ["Data baseline", "Spesifikasi sistem lama dan baru: jenis AP, standard WiFi, bandwidth uplink", "Vendor / Infrastruktur Digital", 0, ""], ["Ujian lapangan", "Senarai lokasi ujian tetap setiap kampus: dewan kuliah, perpustakaan, asrama, kafe, pejabat", "Dr Azlan dan wakil ICT kampus", 0, ""], ["Ujian lapangan", "Wakil ICT di setiap kampus untuk bantu ujian lapangan", "Ketua ICT setiap kampus", 0, "Ujian di 31 lokasi tak boleh dibuat seorang diri"], ["Ujian lapangan", "Alat ujian: pelayan iperf3, peranti ujian standard, aplikasi imbasan WiFi", "Sendiri / Bahagian Digital", 0, "Ukur throughput, latency, jitter, kehilangan paket, RSSI, SNR"], ["Ujian lapangan", "Akses baca sahaja ke dashboard controller", "Infrastruktur Digital", 0, ""], ["Kebenaran", "Kebenaran bertulis bos untuk data, survei dan penerbitan", "Pengurusan UiTM Penang", 0, "Berasingan daripada kebenaran sambung belajar"], ["Kebenaran", "Kebenaran sambung belajar daripada pengurusan UiTM Penang", "Pengurusan UiTM Penang", 0, "Terangkan part-time, bimbingan online, komitmen 2027"], ["Kebenaran", "Kelulusan akses data rangkaian dan kepatuhan PDPA (metrik agregat sahaja)", "Pegawai PDPA / pengurusan", 0, "Jangan rekod kandungan trafik atau MAC peranti yang boleh dikenal pasti"], ["Kebenaran", "Permohonan etika REC UiTM, termasuk ukuran teknikal dan survei", "REC UiTM, melalui Dr Azlan", 0, "Wajib lulus sebelum survei diedar dan data dikumpul"], ["Persampelan", "Jumlah pelajar (199,488) dan staf (8,714 akademik, 12,753 pentadbiran)", "Sistem data pelajar dan HR", 3, "Pelajar aktif kampus UiTM, tidak termasuk kolej bersekutu"], ["Persampelan", "Pecahan staf akademik dan pentadbiran mengikut kampus", "Bahagian Sumber Manusia", 0, "Untuk agihan sampel staf ikut kampus"], ["Persampelan", "Kaedah edar survei kepada pelajar dan staf semua kampus", "Bahagian Digital / HEP / HR", 0, "Edar 800-1,000 borang pelajar untuk dapat 384 jawapan"], ["Perbincangan", "Bincang skop kajian teknikal dan reka bentuk kajian", "Dr Azlan (SV1)", 0, "Dr Azlan tanya sama ada ada kajian teknikal"]];
 const $=id=>document.getElementById(id);
-let items=[],set={theme:'system',lang:'ms',filter:'all'},editId=null,dip=null;
+let items=[],prep=[],pEditId=null,set={theme:'system',lang:'ms',filter:'all',tab:'check',pf:'all'},editId=null,dip=null;
 const t=()=>L[set.lang];
 function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
 function seed(){return SEED.map((s,i)=>({id:'s'+i,phase:s[0],title:s[1],date:s[2],check:!!s[3],note:s[4],done:false}))}
@@ -173,7 +222,7 @@ function fmt(s){return pd(s).toLocaleDateString(set.lang==='ms'?'ms-MY':'en-GB',
 function esc(s){return String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
 function applyTheme(){const d=set.theme==='dark'||(set.theme==='system'&&matchMedia('(prefers-color-scheme:dark)').matches);document.documentElement.dataset.theme=d?'dark':'light';document.querySelector('meta[name=theme-color]').content=d?'#101614':'#0F6E56'}
 function status(it){if(it.done)return{c:'done',x:t().done};const d=diff(it.date);if(d<0)return{c:'late',x:t().lateN.replace('{n}',-d)};if(d===0)return{c:'soon',x:t().today};if(d===1)return{c:'soon',x:t().tmr};if(d<=14)return{c:'soon',x:d+' '+t().days};return{c:'ok',x:d+' '+t().days}}
-function render(){
+function renderCheck(){
   const T=t();
   $('bTheme').textContent=T.theme[set.theme];$('bLang').textContent=set.lang==='ms'?'BM':'EN';
   $('bInstall').textContent=T.install;$('bExp').textContent=T.exp;$('bImp').textContent=T.imp;$('bRst').textContent=T.rst;$('fab').setAttribute('aria-label',T.add);
@@ -195,6 +244,67 @@ function render(){
   });
   $('list').innerHTML=h;
 }
+
+function pseed(){return PSEED.map((x,i)=>({id:'p'+i,cat:x[0],title:x[1],src:x[2],st:x[3],name:'',tel:'',asked:'',note:x[4]}))}
+function pload(){try{prep=JSON.parse(localStorage.getItem(PKEY));if(!Array.isArray(prep))throw 0}catch(e){prep=pseed();psave()}}
+function psave(){try{localStorage.setItem(PKEY,JSON.stringify(prep))}catch(e){}}
+function tstr(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function pDays(p){return p.st===2&&p.asked?-diff(p.asked):null}
+function pFu(p){const d=pDays(p);return d!==null&&d>=7}
+function waNum(s){let n=String(s||'').replace(/\D/g,'');if(n.startsWith('0'))n='6'+n;return n}
+function updLinks(card,p){const n=waNum(p.tel),ok=n.length>=9;const w=card.querySelector('.wa'),c=card.querySelector('.cl');w.href='https://wa.me/'+n;c.href='tel:+'+n;w.classList.toggle('hid',!ok);c.classList.toggle('hid',!ok)}
+function renderPrep(){
+  const T=t(),cats=[];prep.forEach(p=>{if(!cats.includes(p.cat))cats.push(p.cat)});
+  if(set.pf!=='all'&&!cats.includes(set.pf))set.pf='all';
+  const fu=prep.filter(pFu).length;
+  $('tabs').innerHTML=`<button data-tab="check" class="${set.tab==='check'?'on':''}">${T.tabC}</button><button data-tab="prep" class="${set.tab==='prep'?'on':''}">${T.tabP}${fu?' ('+fu+')':''}</button>`;
+  $('vCheck').style.display=set.tab==='check'?'':'none';
+  $('vPrep').style.display=set.tab==='prep'?'':'none';
+  let h=`<div class="sum">${[3,2,1,0].map(k=>`<div>${T.pst[k]}<b>${prep.filter(p=>p.st===k).length}</b></div>`).join('')}</div>`;
+  if(fu)h+=`<div class="fub">${T.fuB.replace('{n}',fu)}</div>`;
+  h+=`<div class="filters" style="flex-wrap:wrap">${['all'].concat(cats).map(c=>`<button data-pf="${esc(c)}" class="${set.pf===c?'on':''}">${c==='all'?T.pAll:esc(c)}</button>`).join('')}</div>`;
+  const vis=prep.filter(p=>set.pf==='all'||p.cat===set.pf);
+  if(!vis.length)h+=`<div class="empty">${T.pNone}</div>`;
+  vis.forEach(p=>{const d=pDays(p),f=pFu(p);
+    h+=`<div class="pc ${f?'fu':''}" data-id="${p.id}"><div class="top"><div class="cat">${esc(p.cat)}</div><button class="ed" data-a="pedit" aria-label="edit">✎</button></div><div class="t">${esc(p.title)}</div><div class="src">${T.pFrom}: ${esc(p.src)}</div>${p.note?`<div class="n">${esc(p.note)}</div>`:''}<div class="r2"><select class="s${p.st}" data-a="pst">${T.pst.map((x,j)=>`<option value="${j}" ${j===p.st?'selected':''}>${x}</option>`).join('')}</select>${p.asked?`<span class="tag ${f?'late':'ok'}">${T.pAsked} ${fmt(p.asked)}${d!==null?' · '+(f?T.fuN.replace('{n}',d):d+' '+T.pdays):''}</span>`:''}</div><div class="r3"><input type="text" placeholder="${T.pName}" value="${esc(p.name)}" data-k="name"><input type="tel" placeholder="${T.pPhone}" value="${esc(p.tel)}" data-k="tel" inputmode="tel"><a class="wa hid" target="_blank" rel="noopener">${T.wa}</a><a class="cl hid">${T.call}</a></div></div>`});
+  $('vPrep').innerHTML=h;
+  $('vPrep').querySelectorAll('.pc').forEach(c=>updLinks(c,prep.find(p=>p.id===c.dataset.id)));
+}
+function render(){renderCheck();renderPrep()}
+function openP(id){
+  const T=t();pEditId=id;const p=prep.find(x=>x.id===id);
+  $('pmTitle').textContent=p?T.pEdit:T.pAdd;
+  [['plT','pT'],['plC','pC'],['plS','pS'],['plSt','pSt'],['plNm','pNm'],['plPh','pPh'],['plAk','pAk'],['plNo','pNo']].forEach(x=>$(x[0]).textContent=T[x[1]]);
+  $('pSave').textContent=T.save;$('pDel').textContent=T.del;$('pCan').textContent=T.can;
+  const cats=[];prep.forEach(x=>{if(!cats.includes(x.cat))cats.push(x.cat)});
+  $('pcl').innerHTML=cats.map(c=>`<option value="${esc(c)}">`).join('');
+  $('pSt').innerHTML=T.pst.map((x,j)=>`<option value="${j}">${x}</option>`).join('');
+  $('pT').value=p?p.title:'';$('pC').value=p?p.cat:(set.pf!=='all'?set.pf:(cats[0]||''));$('pS').value=p?p.src:'';
+  $('pSt').value=p?p.st:0;$('pNm').value=p?p.name:'';$('pPh').value=p?p.tel:'';$('pAk').value=p?p.asked:'';$('pNo').value=p?p.note:'';
+  $('pDel').style.display=p?'':'none';
+  $('pmodal').classList.add('on');
+}
+function closeP(){$('pmodal').classList.remove('on');pEditId=null}
+$('tabs').addEventListener('click',e=>{const b=e.target.closest('[data-tab]');if(b){set.tab=b.dataset.tab;saveSet();render();scrollTo(0,0)}});
+$('vPrep').addEventListener('click',e=>{
+  const pf=e.target.dataset.pf;if(pf!==undefined){set.pf=pf;saveSet();render();return}
+  if(e.target.dataset.a==='pedit')openP(e.target.closest('.pc').dataset.id);
+});
+$('vPrep').addEventListener('change',e=>{
+  const card=e.target.closest('.pc');if(!card)return;const p=prep.find(x=>x.id===card.dataset.id);
+  if(e.target.dataset.a==='pst'){p.st=+e.target.value;if(p.st===2&&!p.asked)p.asked=tstr();psave();render()}
+  else if(e.target.dataset.k){p[e.target.dataset.k]=e.target.value.trim();psave();updLinks(card,p)}
+});
+$('pCan').onclick=closeP;
+$('pmodal').addEventListener('click',e=>{if(e.target===$('pmodal'))closeP()});
+$('pSave').onclick=()=>{
+  const ti=$('pT').value.trim();if(!ti){toast(t().pNeed);return}
+  const o={title:ti,cat:$('pC').value.trim()||'—',src:$('pS').value.trim(),st:+$('pSt').value,name:$('pNm').value.trim(),tel:$('pPh').value.trim(),asked:$('pAk').value,note:$('pNo').value.trim()};
+  if(o.st===2&&!o.asked)o.asked=tstr();
+  if(pEditId)Object.assign(prep.find(x=>x.id===pEditId),o);else prep.push(Object.assign({id:uid()},o));
+  psave();closeP();render();toast(t().saved);
+};
+$('pDel').onclick=()=>{if(confirm(t().pDelq)){prep=prep.filter(x=>x.id!==pEditId);psave();closeP();render()}};
 function openM(id){
   const T=t();editId=id;const it=items.find(i=>i.id===id);
   $('mTitle').textContent=it?T.edit:T.add;
@@ -221,7 +331,7 @@ $('list').addEventListener('click',e=>{
   else if(a==='edit')openM(id);
 });
 $('filters').addEventListener('click',e=>{const f=e.target.dataset.f;if(f){set.filter=f;saveSet();render()}});
-$('fab').onclick=()=>openM(null);
+$('fab').onclick=()=>set.tab==='prep'?openP(null):openM(null);
 $('bCan').onclick=closeM;
 $('modal').addEventListener('click',e=>{if(e.target===$('modal'))closeM()});
 $('bSave').onclick=()=>{
@@ -234,19 +344,22 @@ $('bDel').onclick=()=>{if(confirm(t().delq)){items=items.filter(i=>i.id!==editId
 $('bCal').onclick=()=>{const it=items.find(i=>i.id===editId);if(it)ics(it)};
 $('bTheme').onclick=()=>{const o=['system','light','dark'];set.theme=o[(o.indexOf(set.theme)+1)%3];saveSet();applyTheme();render()};
 $('bLang').onclick=()=>{set.lang=set.lang==='ms'?'en':'ms';document.documentElement.lang=set.lang==='ms'?'ms':'en';saveSet();render()};
-$('bExp').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify({app:'mymaster',version:VER,items},null,2)],{type:'application/json'}));a.download='mymaster-backup-'+new Date().toISOString().slice(0,10)+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2000)};
+$('bExp').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify({app:'mymaster',version:VER,items,prep},null,2)],{type:'application/json'}));a.download='mymaster-backup-'+new Date().toISOString().slice(0,10)+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2000)};
 $('bImp').onclick=()=>$('fImp').click();
 $('fImp').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{
   $('loader').classList.remove('off');
-  setTimeout(()=>{try{const j=JSON.parse(r.result);const a=Array.isArray(j)?j:j.items;if(!Array.isArray(a)||a.some(i=>!i.title||!i.date))throw 0;items=a.map(i=>({id:i.id||uid(),phase:i.phase||'—',title:String(i.title),date:i.date,check:!!i.check,note:i.note||'',done:!!i.done}));save();render();toast(t().impok)}catch(x){toast(t().imperr)}$('loader').classList.add('off')},500)};r.readAsText(f);e.target.value=''};
-$('bRst').onclick=()=>{if(confirm(t().rstq)){items=seed();save();render()}};
+  setTimeout(()=>{try{const j=JSON.parse(r.result);const a=Array.isArray(j)?j:j.items,pp=Array.isArray(j)?null:j.prep;if(!Array.isArray(a)&&!Array.isArray(pp))throw 0;
+    if(Array.isArray(a)){if(a.some(i=>!i.title||!i.date))throw 0;items=a.map(i=>({id:i.id||uid(),phase:i.phase||'—',title:String(i.title),date:i.date,check:!!i.check,note:i.note||'',done:!!i.done}));save()}
+    if(Array.isArray(pp)){if(pp.some(i=>!i.title))throw 0;prep=pp.map(i=>({id:i.id||uid(),cat:i.cat||'—',title:String(i.title),src:i.src||'',st:[0,1,2,3].includes(+i.st)?+i.st:0,name:i.name||'',tel:i.tel||'',asked:i.asked||'',note:i.note||''}));psave()}
+    render();toast(t().impok)}catch(x){toast(t().imperr)}$('loader').classList.add('off')},500)};r.readAsText(f);e.target.value=''};
+$('bRst').onclick=()=>{if(set.tab==='prep'){if(confirm(t().pRstq)){prep=pseed();psave();render()}}else if(confirm(t().rstq)){items=seed();save();render()}};
 addEventListener('beforeinstallprompt',e=>{e.preventDefault();dip=e;$('bInstall').style.display=''});
 $('bInstall').onclick=async()=>{if(dip){dip.prompt();await dip.userChoice;dip=null;$('bInstall').style.display='none'}else toast(t().iosh)};
 addEventListener('appinstalled',()=>$('bInstall').style.display='none');
 if(/iphone|ipad/i.test(navigator.userAgent)&&!navigator.standalone)$('bInstall').style.display='';
 matchMedia('(prefers-color-scheme:dark)').addEventListener('change',()=>{if(set.theme==='system')applyTheme()});
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
-load();document.documentElement.lang=set.lang==='ms'?'ms':'en';applyTheme();render();
+load();pload();document.documentElement.lang=set.lang==='ms'?'ms':'en';applyTheme();render();
 setTimeout(()=>$('loader').classList.add('off'),500);
 </script>
 </body>
